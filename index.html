@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aura · tu día en foco</title>
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <header class="encabezado">
+    <div class="encabezado__marca">
+      <img class="encabezado__logo" src="assets/aura-logo.png" alt="Logo de Aura" width="60" height="60" />
+      <div>
+        <h1 class="encabezado__titulo">Aura</h1>
+        <p class="encabezado__subtitulo">tu día, en foco</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="tablero">
+    <!-- PANEL 1: agenda del día -->
+    <section class="panel">
+      <div class="panel__caja">
+        <h2 class="panel__titulo">Mis actividades del día</h2>
+        <button class="boton" type="button">
+         Nueva actividad
+        </button>
+      </div>
+
+      <div class="grupo grupo--filtros">
+        <button class="pastilla" type="button">Todas</button>
+        <button class="pastilla" type="button">Pendientes</button>
+        <button class="pastilla" type="button">Hechas</button>
+      </div>
+
+      <p class="vacio">
+        Todavía no hay nada acá.<br/>
+        <span>Sumá tu primera actividad o elegí una de la sección.</span>
+      </p>
+
+      <div class="sugerencias">
+        <p class="sugerencias__titulo">Agregado rápido</p>
+        <div class="grupo"></div>
+      </div>
+    </section>
+
+    <!-- PANEL 2: foco - pomodoro y cronometro -->
+    <aside class="panel">
+      <div class="panel__caja">
+        <h2 class="panel__titulo">Foco</h2>
+        <div class="grupo">
+          <button class="pastilla" type="button">Pomodoro</button>
+          <button class="pastilla" type="button">Cronómetro</button>
+        </div>
+      </div>
+
+      <div class="reloj">
+        <svg class="reloj__anillo" viewBox="0 0 240 240">
+          <circle class="reloj__pista" cx="120" cy="120" r="104" />
+          <circle class="reloj__avance" cx="120" cy="120" r="104" pathLength="100" />
+        </svg>
+        <div class="reloj__centro">
+          <p class="reloj__tiempo">25:00</p>
+          <p class="reloj__fase">Enfoque</p>
+        </div>
+      </div>
+
+      <div class="controles">
+        <button class="boton boton--principal" type="button">Iniciar</button>
+        <button class="boton boton--secundario" type="button">Reiniciar</button>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__texto">
+      &copy; 2026 <strong>Aura</strong>, tu día en foco · Una app de Srta.Milu para el curso de JavaScript de
+      <a class="footer__enlace" href="https://www.coderhouse.com.ar/" target="_blank" rel="noopener noreferrer">Coderhouse</a>
+    </p>
+  </footer>
+
+</body>
+</html>
