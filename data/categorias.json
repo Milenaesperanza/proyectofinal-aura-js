@@ -1,0 +1,22 @@
+[
+  {
+    "id": "estudio",
+    "nombre": "Estudio"
+  },
+  {
+    "id": "trabajo",
+    "nombre": "Trabajo"
+  },
+  {
+    "id": "personal",
+    "nombre": "Personal"
+  },
+  {
+    "id": "bienestar",
+    "nombre": "Bienestar"
+  },
+  {
+    "id": "recordatorio",
+    "nombre": "Recordatorio"
+  }
+]

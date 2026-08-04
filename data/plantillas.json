@@ -1,0 +1,47 @@
+[
+  {
+    "id": "entrenar",
+    "titulo": "Entrenar",
+    "categoriaId": "bienestar"
+  },
+  {
+    "id": "trabajar",
+    "titulo": "Trabajar",
+    "categoriaId": "trabajo"
+  },
+  {
+    "id": "estudiar",
+    "titulo": "Estudiar",
+    "categoriaId": "estudio"
+  },
+  {
+    "id": "reunion",
+    "titulo": "Reunión",
+    "categoriaId": "recordatorio"
+  },
+  {
+    "id": "hacer-un-pago",
+    "titulo": "Hacer un pago",
+    "categoriaId": "recordatorio"
+  },
+  {
+    "id": "almorzar",
+    "titulo": "Almorzar",
+    "categoriaId": "recordatorio"
+  },
+  {
+    "id": "merienda",
+    "titulo": "Merendar",
+    "categoriaId": "recordatorio"
+  },
+  {
+    "id": "tiempo-personal",
+    "titulo": "Tiempo personal",
+    "categoriaId": "personal"
+  },
+  {
+    "id": "meditar",
+    "titulo": "Meditar",
+    "categoriaId": "bienestar"
+  }
+]
