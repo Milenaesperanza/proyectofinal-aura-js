@@ -1,22 +1,32 @@
 [
   {
     "id": "estudio",
-    "nombre": "Estudio"
+    "nombre": "Estudio",
+    "emoji": "📚",
+    "color": "#644f87"
   },
   {
     "id": "trabajo",
-    "nombre": "Trabajo"
+    "nombre": "Trabajo",
+    "emoji": "💼",
+    "color": "#3a6ea5"
   },
   {
     "id": "personal",
-    "nombre": "Personal"
+    "nombre": "Personal",
+    "emoji": "🌿",
+    "color": "#4a8060"
   },
   {
     "id": "bienestar",
-    "nombre": "Bienestar"
+    "nombre": "Bienestar",
+    "emoji": "🧘",
+    "color": "#c05621"
   },
   {
     "id": "recordatorio",
-    "nombre": "Recordatorio"
+    "nombre": "Recordatorio",
+    "emoji": "🔔",
+    "color": "#a13a63"
   }
 ]

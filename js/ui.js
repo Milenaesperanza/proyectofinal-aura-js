@@ -1,5 +1,3 @@
-// Funciones para Reloj HH:MM
-
 export function dosDigitos(numero) {
   return String(numero).padStart(2, "0");
 }
@@ -11,6 +9,7 @@ export function formatearReloj(segundos) {
   return `${dosDigitos(minutos)}:${dosDigitos(resto)}`;
 }
 
+// El camino de vuelta: "25:00" -> 1500 segundos.
 export function segundosDesdeReloj(texto) {
   const [minutos, segundos] = texto.trim().split(":").map(Number);
 

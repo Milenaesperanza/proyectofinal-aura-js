@@ -25,7 +25,7 @@
     <section class="panel">
       <div class="panel__caja">
         <h2 class="panel__titulo">Mis actividades del día</h2>
-        <button class="boton" type="button">
+        <button class="boton boton--principal" id="btn-nueva" type="button">
          Nueva actividad
         </button>
       </div>
@@ -36,14 +36,16 @@
         <button class="pastilla" type="button">Hechas</button>
       </div>
 
-      <p class="vacio">
+      <ul class="lista" id="lista-actividades"></ul>
+
+      <p class="vacio" id="mensaje-vacio" hidden>
         Todavía no hay nada acá.<br/>
         <span>Sumá tu primera actividad o elegí una de la sección.</span>
       </p>
 
       <div class="sugerencias">
         <p class="sugerencias__titulo">Agregado rápido</p>
-        <div class="grupo"></div>
+        <div class="grupo" id="sugerencias"></div>
       </div>
     </section>
 
@@ -74,6 +76,43 @@
       </div>
     </aside>
   </main>
+
+  <!-- Modal de actividades -->
+  <div class="modal" id="modal-actividad">
+    <div class="modal__caja">
+      <form class="formulario" id="formulario-actividad">
+        <h3 class="formulario__titulo" id="formulario-titulo">Nueva actividad</h3>
+
+        <label class="campo">
+          <span class="campo__etiqueta">¿Qué querés hacer?</span>
+          <input class="campo__input" type="text" id="campo-titulo" maxlength="60" placeholder="Practicar JavaScript" required />
+        </label>
+
+        <div class="campo-fila">
+          <div class="campo">
+            <span class="campo__etiqueta">Hora</span>
+            <div class="campo-hora">
+              <input class="campo__input" type="number" id="campo-hora-horas" min="5" max="23" step="1" value="9" required aria-label="Hora" />
+              <span class="campo-hora__separador" aria-hidden="true">:</span>
+              <input class="campo__input" type="number" id="campo-hora-minutos" min="0" max="59" step="1" value="0" required aria-label="Minutos" />
+            </div>
+          </div>
+        </div>
+
+        <fieldset class="campo">
+          <legend class="campo__etiqueta">Categoría</legend>
+          <div class="grupo" id="categorias"></div>
+        </fieldset>
+
+        <p class="formulario__error" id="formulario-error" role="alert" hidden></p>
+
+        <div class="formulario__acciones">
+          <button class="boton boton--secundario" type="button" id="btn-cancelar">Cancelar</button>
+          <button class="boton boton--principal" type="submit">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <footer class="footer">
     <p class="footer__texto">

@@ -2,46 +2,64 @@
   {
     "id": "entrenar",
     "titulo": "Entrenar",
-    "categoriaId": "bienestar"
+    "categoriaId": "bienestar",
+    "emoji": "🏃",
+    "horaSugerida": "07:00"
   },
   {
     "id": "trabajar",
     "titulo": "Trabajar",
-    "categoriaId": "trabajo"
+    "categoriaId": "trabajo",
+    "emoji": "💼",
+    "horaSugerida": "09:00"
   },
   {
     "id": "estudiar",
     "titulo": "Estudiar",
-    "categoriaId": "estudio"
+    "categoriaId": "estudio",
+    "emoji": "📚",
+    "horaSugerida": "18:00"
   },
   {
     "id": "reunion",
     "titulo": "Reunión",
-    "categoriaId": "recordatorio"
+    "categoriaId": "recordatorio",
+    "emoji": "🗓️",
+    "horaSugerida": "11:00"
   },
   {
     "id": "hacer-un-pago",
     "titulo": "Hacer un pago",
-    "categoriaId": "recordatorio"
+    "categoriaId": "recordatorio",
+    "emoji": "💳",
+    "horaSugerida": "10:00"
   },
   {
     "id": "almorzar",
     "titulo": "Almorzar",
-    "categoriaId": "recordatorio"
+    "categoriaId": "recordatorio",
+    "emoji": "🍽️",
+    "horaSugerida": "13:00"
   },
   {
     "id": "merienda",
     "titulo": "Merendar",
-    "categoriaId": "recordatorio"
+    "categoriaId": "recordatorio",
+    "emoji": "🍵",
+    "horaSugerida": "17:00"
   },
   {
     "id": "tiempo-personal",
     "titulo": "Tiempo personal",
-    "categoriaId": "personal"
+    "categoriaId": "personal",
+    "emoji": "🌿",
+    "horaSugerida": "20:00"
   },
   {
     "id": "meditar",
     "titulo": "Meditar",
-    "categoriaId": "bienestar"
+    "categoriaId": "bienestar",
+    "emoji": "🧘",
+    "horaSugerida": "21:00"
   }
 ]

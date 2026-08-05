@@ -1,6 +1,6 @@
 import { formatearReloj, segundosDesdeReloj } from "./ui.js";
 
-// ---------- Elementos del panel ----------
+// ---------- Los elementos del panel ----------
 
 const dom = {
   tiempo: document.querySelector("#reloj-tiempo"),
@@ -8,11 +8,12 @@ const dom = {
   anillo: document.querySelector("#anillo-avance"),
 };
 
-// Pomodoro de 25:00 y Cronometro en 00:00
+// El HTML manda: lo que está escrito en pantalla es el pomodoro por defecto.
+// Se lee una sola vez, antes de que dibujar() empiece a pisar el texto.
 const totalPomodoro = segundosDesdeReloj(dom.tiempo.textContent);
 const vueltaAnillo = 100;
 
-// ---------- Estado inicial ----------
+// ---------- Estado ----------
 
 let modo = "pomodoro";
 let transcurridos = 0;
@@ -20,7 +21,7 @@ let restantes = totalPomodoro;
 let corriendo = false;
 let intervalo = null;
 
-// ---------- Animación del anillo para pintura ----------
+// ---------- Dibujo ----------
 
 export function dibujar() {
   let mostrado = transcurridos;
@@ -43,12 +44,12 @@ export function dibujar() {
 
 // ---------- El conteo ----------
 
-// Tic visual.
+// Lo que pasa en cada segundo.
 function tic() {
   if (modo === "pomodoro") {
     restantes -= 1;
 
-    // Stop del pomodoro.
+    // Se acabó el bloque de enfoque: frenamos solos.
     if (restantes <= 0) {
       restantes = 0;
       pausar();
@@ -61,7 +62,7 @@ function tic() {
   dibujar();
 }
 
-// ---------- Controles ----------
+// ---------- Los controles ----------
 
 function iniciar() {
   if (corriendo) return;

@@ -1,9 +1,21 @@
 :root {
   --lila-solido: #644f87;
+  --lila-profundo: #4a3a66;
   --lila-claro: #e9e4f1;
   --blanco: #ffffff;
   --tinta: #38323f;
   --tinta-suave: #55505e;
+  --naranja: #c05621;
+
+  --velo: rgba(56, 50, 63, 0.45);
+  --sombra: 0 18px 40px rgba(56, 50, 63, 0.18);
+
+  --radio: 22px;
+  --radio-chico: 14px;
+  --radio-redondo: 999px;
+
+  --t: 0.18s;
+  --t-lenta: 0.5s;
 
   --fuente-titulo: "Lora", Georgia, serif;
   --fuente-texto: "Inter", system-ui, sans-serif;
@@ -144,20 +156,47 @@ strong {
 
 /* ---------- Pastillas para filtros  ---------- */
 
+.grupo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .pastilla {
   font-family: inherit;
   font-size: var(--texto-chico);
   color: var(--tinta-suave);
   background: var(--blanco);
   border: 1px solid var(--lila-claro);
+  border-radius: var(--radio-redondo);
   padding: 7px 14px;
   cursor: pointer;
+  transition: color var(--t) ease, background var(--t) ease,
+    border-color var(--t) ease, transform var(--t) ease;
 }
 
 .pastilla:hover {
-  color: var(--lila-solido);
-  border-color: var(--lila-solido);
+  color: var(--lila-profundo);
+  border-color: var(--lila-profundo);
   background: var(--lila-claro);
+  transform: translateY(-2px);
+}
+
+.pastilla--categoria,
+.pastilla--categoria:hover {
+  color: var(--tinta);
+  background: var(--blanco);
+  border-color: var(--color-categoria);
+  transform: none;
+}
+
+/* Va después de --categoria para ganarle cuando las dos pintan lo mismo. */
+.pastilla--activa,
+.pastilla--activa:hover {
+  color: #ffffff;
+  background: var(--color-categoria, var(--lila-profundo));
+  border-color: transparent;
+  transform: none;
 }
 
 
@@ -265,6 +304,136 @@ strong {
   margin: 16px 0 12px;
 }
 
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  padding: 16px;
+  background: var(--velo);
+  backdrop-filter: blur(4px);
+}
+
+.modal--abierto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal__caja {
+  width: min(440px, 92vw);
+  max-height: 90dvh;
+  overflow-y: auto;
+  border: 1px solid var(--lila-solido);
+  border-radius: 0;
+  background: var(--blanco);
+  box-shadow: var(--sombra);
+  animation: subir var(--t-lenta) ease both;
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- formulario del modal nueva actividad ---------- */
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 26px;
+}
+
+.formulario__titulo {
+  font-family: var(--fuente-titulo);
+  font-size: var(--texto-grande);
+  font-weight: var(--peso-titulo);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: none; /* el fieldset de categorías trae borde por defecto */
+}
+
+.campo__etiqueta {
+  font-size: var(--texto-chico);
+  font-weight: var(--peso-medio);
+  color: var(--tinta-suave);
+}
+
+legend.campo__etiqueta {
+  padding-bottom: 10px;
+}
+
+.campo__input {
+  font-family: inherit;
+  font-size: var(--texto-base);
+  color: var(--tinta);
+  padding: 11px 14px;
+  border: 1px solid var(--lila-claro);
+  border-radius: var(--radio-chico);
+  background: var(--lila-claro);
+  transition: border-color var(--t) ease;
+}
+
+.campo__input:focus {
+  outline: none;
+  border-color: var(--lila-profundo);
+}
+
+.campo-fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  align-items: flex-end;
+}
+
+.campo-hora {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.campo-fila .campo-hora {
+  width: 150px;
+}
+
+.campo-hora__separador {
+  font-size: var(--texto-base);
+  color: var(--tinta-suave);
+}
+
+.campo-hora .campo__input {
+  flex: 1;
+  min-width: 0;
+  padding-right: 6px;
+  text-align: center;
+}
+
+.formulario__error {
+  font-size: var(--texto-chico);
+  color: var(--tinta);
+  background: var(--lila-claro);
+  border-left: 3px solid var(--naranja);
+  border-radius: var(--radio-chico);
+  padding: 9px 13px;
+}
+
+.formulario__acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
 
 /* ---------- footer de página ---------- */
 
