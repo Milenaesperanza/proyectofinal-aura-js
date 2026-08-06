@@ -2,7 +2,18 @@ import * as temporizador from "./temporizador.js";
 
 import { dosDigitos } from "./ui.js";
 
-import { cargarDatos, categorias, plantillas, actividades, buscarCategoria, agregarActividad } from "./agenda.js";
+import {
+  cargarDatos,
+  categorias,
+  plantillas,
+  actividades,
+  buscarCategoria,
+  agregarActividad,
+  buscarActividad,
+  editarActividad,
+  eliminarActividad,
+  alternarCompletada,
+} from "./agenda.js";
 
 const lista = document.getElementById("lista-actividades");
 const mensajeVacio = document.getElementById("mensaje-vacio");
@@ -10,6 +21,7 @@ const sugerencias = document.getElementById("sugerencias");
 const btnNueva = document.getElementById("btn-nueva");
 const modal = document.getElementById("modal-actividad");
 const formulario = document.getElementById("formulario-actividad");
+const formularioTitulo = document.getElementById("formulario-titulo");
 const campoTitulo = document.getElementById("campo-titulo");
 const campoHoras = document.getElementById("campo-hora-horas");
 const campoMinutos = document.getElementById("campo-hora-minutos");
@@ -19,6 +31,9 @@ const btnCancelar = document.getElementById("btn-cancelar");
 
 // Categoría elegida en el modal.
 let categoriaElegida = "";
+
+// Qué actividad se está editando.
+let actividadEditando = null;
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -46,16 +61,35 @@ function pintarAgenda() {
     const item = document.createElement("li");
 
     item.className = "tarjeta";
+    item.dataset.id = actividad.id;
     item.style.setProperty("--color-categoria", categoria.color);
+
+    if (actividad.completada) item.classList.add("tarjeta--completada");
+
+    let textoCheck = "Listo";
+    if (actividad.completada) textoCheck = "Deshacer";
+
     item.innerHTML = `
       <div class="tarjeta__cuerpo">
-        <p class="tarjeta__titulo">${actividad.emoji} ${actividad.titulo}</p>
+        <p class="tarjeta__titulo">
+          <span aria-hidden="true">${actividad.emoji}</span>
+          <span class="tarjeta__nombre"></span>
+        </p>
         <p class="tarjeta__meta">
           <span>${actividad.hora}</span>
           <span>${categoria.emoji} ${categoria.nombre}</span>
         </p>
       </div>
+
+      <div class="tarjeta__acciones">
+        <button class="accion" type="button" data-accion="editar">Editar</button>
+        <button class="accion accion--borrar" type="button" data-accion="eliminar">Borrar</button>
+        <button class="accion accion--check" type="button" data-accion="completar">${textoCheck}</button>
+      </div>
     `;
+
+    // El título lo escribe el usuario con textContent.
+    item.querySelector(".tarjeta__nombre").textContent = actividad.titulo;
 
     lista.appendChild(item);
   });
@@ -79,7 +113,7 @@ function pintarCategorias() {
   });
 }
 
-// Marca visualmente la elegida y la guarda para el submit.
+// Marca la elegida y la guarda para el submit.
 function elegirCategoria(id) {
   categoriaElegida = id;
 
@@ -105,16 +139,74 @@ function pintarSugerencias() {
 
 // ---------- Modal ----------
 
-function abrirModal() {
+function abrirModal(actividad = null) {
   formulario.reset();
   error.hidden = true;
-  elegirCategoria(categorias[0].id);
+
+  if (actividad) {
+    actividadEditando = actividad.id;
+    formularioTitulo.textContent = "Editar actividad";
+    campoTitulo.value = actividad.titulo;
+
+    const [horas, minutos] = actividad.hora.split(":");
+    campoHoras.value = horas;
+    campoMinutos.value = minutos;
+
+    elegirCategoria(actividad.categoriaId);
+  } else {
+    actividadEditando = null;
+    formularioTitulo.textContent = "Nueva actividad";
+    elegirCategoria(categorias[0].id);
+  }
+
   modal.classList.add("modal--abierto");
   campoTitulo.focus();
 }
 
 function cerrarModal() {
   modal.classList.remove("modal--abierto");
+  actividadEditando = null;
+}
+
+// ---------- Acciones de la tarjeta ----------
+
+function completar(actividad) {
+  alternarCompletada(actividad.id);
+
+  pintarAgenda();
+}
+
+function eliminar(actividad) {
+  const confirmado = confirm(`¿Querés borrar "${actividad.titulo}"?`);
+
+  if (confirmado === false) return;
+
+  eliminarActividad(actividad.id);
+
+  pintarAgenda();
+}
+
+function manejarClicEnLista(evento) {
+  const disparador = evento.target.closest("[data-accion]");
+  const tarjeta = evento.target.closest(".tarjeta");
+
+  if (disparador === null || tarjeta === null) return;
+
+  const actividad = buscarActividad(tarjeta.dataset.id);
+
+  if (actividad === undefined) return;
+
+  switch (disparador.dataset.accion) {
+    case "completar":
+      completar(actividad);
+      break;
+    case "editar":
+      abrirModal(actividad);
+      break;
+    case "eliminar":
+      eliminar(actividad);
+      break;
+  }
 }
 
 // ---------- Eventos ----------
@@ -131,17 +223,19 @@ function conectarEventos() {
     marcarPastillaActiva(dom.modos, boton);
   });
 
-  // Delegación: un solo listener para todas las pastillas.
+  // Un solo listener para todas las actividades sugeridas.
   contenedorCategorias.addEventListener("click", (evento) => {
     const boton = evento.target.closest(".pastilla");
 
     if (boton) elegirCategoria(boton.dataset.id);
   });
 
-  btnNueva.addEventListener("click", abrirModal);
+  lista.addEventListener("click", manejarClicEnLista);
+
+  btnNueva.addEventListener("click", () => abrirModal());
   btnCancelar.addEventListener("click", cerrarModal);
 
-  // Clic en el fondo oscuro también cierra.
+  // Clic en el fondo oscuro también cierra el modal.
   modal.addEventListener("click", (evento) => {
     if (evento.target === modal) cerrarModal();
   });
@@ -165,12 +259,18 @@ function conectarEventos() {
       return;
     }
 
-    agregarActividad({
+    const datos = {
       titulo: titulo,
       hora: `${dosDigitos(horas)}:${dosDigitos(minutos)}`,
       categoriaId: categoriaElegida,
       emoji: buscarCategoria(categoriaElegida).emoji,
-    });
+    };
+
+    if (actividadEditando) {
+      editarActividad(actividadEditando, datos);
+    } else {
+      agregarActividad(datos);
+    }
 
     pintarAgenda();
     cerrarModal();

@@ -18,23 +18,74 @@ export async function cargarDatos() {
   plantillas = await traerJSON("plantillas");
 }
 
-// La usan la tarjeta y el modal para saber color, emoji y nombre.
 export function buscarCategoria(id) {
   return categorias.find((categoria) => categoria.id === id);
+}
+
+let contadorActividades = 0;
+
+function nuevoId() {
+  contadorActividades++;
+
+  return `act-${Date.now()}-${contadorActividades}`;
 }
 
 // Suma una actividad al estado y la devuelve ya armada.
 export function agregarActividad({ titulo, hora, categoriaId, emoji }) {
   const actividad = {
-    id: Date.now(),
+    id: nuevoId(),
     titulo: titulo.trim(),
     hora: hora,
     categoriaId: categoriaId,
     emoji: emoji,
+    completada: false,
   };
 
   actividades.push(actividad);
   actividades.sort((a, b) => a.hora.localeCompare(b.hora));
 
   return actividad;
+}
+
+// Busca una actividad por su id; find devuelve undefined si no la encuentra.
+export function buscarActividad(id) {
+  return actividades.find((actividad) => actividad.id === id);
+}
+
+// Modifica una actividad existente y la reordena si cambió de hora.
+export function editarActividad(id, cambios) {
+  const actividad = buscarActividad(id);
+
+  if (actividad === undefined) return undefined;
+
+  actividad.titulo = cambios.titulo.trim();
+  actividad.hora = cambios.hora;
+  actividad.categoriaId = cambios.categoriaId;
+  actividad.emoji = cambios.emoji;
+
+  actividades.sort((a, b) => a.hora.localeCompare(b.hora));
+
+  return actividad;
+}
+
+// Elimina una actividad de la lista.
+export function eliminarActividad(id) {
+  const posicion = actividades.findIndex((actividad) => actividad.id === id);
+
+  if (posicion === -1) return;
+
+  actividades.splice(posicion, 1);
+}
+
+// Marca o desmarca una actividad como completada, y devuelve cómo quedó.
+export function alternarCompletada(id) {
+  const actividad = buscarActividad(id);
+
+  if (actividad.completada === true) {
+    actividad.completada = false;
+  } else {
+    actividad.completada = true;
+  }
+
+  return actividad.completada;
 }

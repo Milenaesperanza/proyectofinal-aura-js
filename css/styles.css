@@ -202,7 +202,7 @@ strong {
 /* ---------- Espacio para actividades agregadas ---------- */
 
 .lista {
-  --alto-tarjeta: 70px;   /* 13px+13px padding + 2px borde + ~42px de contenido */
+  --alto-tarjeta: 70px;
   --gap-lista: 10px;
 
   display: flex;
@@ -213,7 +213,7 @@ strong {
   /* 3 tarjetas + los 2 gaps que hay entre ellas */
   max-height: calc(var(--alto-tarjeta) * 3 + var(--gap-lista) * 2);
   overflow-y: auto;
-  padding-block: 2px;     /* que el translateY(-2px) del hover no se recorte */
+  padding-block: 2px;
   scrollbar-width: thin;
   scrollbar-color: var(--lila-claro) transparent;
 }
@@ -239,6 +239,65 @@ strong {
   flex-direction: column;
   gap: 3px;
   min-width: 0;
+  flex: 1;
+}
+
+/* ---------- Acciones de la tarjeta ---------- */
+
+.tarjeta__acciones {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.accion {
+  padding: 5px 12px;
+  border: 1px solid var(--lila-claro);
+  border-radius: var(--radio-redondo);
+  background: transparent;
+  color: var(--tinta-suave);
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-chico);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--t) ease, border-color var(--t) ease, color var(--t) ease;
+}
+
+.accion:hover {
+  border-color: var(--lila-solido);
+  color: var(--lila-solido);
+}
+
+.accion--borrar:hover {
+  border-color: var(--naranja);
+  color: var(--naranja);
+}
+
+.accion--check {
+  background: var(--lila-solido);
+  border-color: var(--lila-solido);
+  color: var(--blanco);
+}
+
+.accion--check:hover {
+  background: var(--lila-profundo);
+  border-color: var(--lila-profundo);
+  color: var(--blanco);
+}
+
+.tarjeta--completada .accion--check {
+  background: transparent;
+  border-color: var(--lila-claro);
+  color: var(--tinta-suave);
+}
+
+.tarjeta--completada {
+  opacity: 0.55;
+}
+
+.tarjeta--completada .tarjeta__titulo {
+  text-decoration: line-through;
 }
 
 .tarjeta__titulo {
@@ -525,7 +584,6 @@ legend.campo__etiqueta {
 .footer__enlace:hover {
   border-bottom-color: var(--lila-solido);
 }
-
 
 /* ---------- Responsive ---------- */
 
