@@ -7,6 +7,7 @@ import {
   categorias,
   plantillas,
   actividades,
+  listarPor,
   buscarCategoria,
   agregarActividad,
   buscarActividad,
@@ -26,6 +27,7 @@ const campoTitulo = document.getElementById("campo-titulo");
 const campoHoras = document.getElementById("campo-hora-horas");
 const campoMinutos = document.getElementById("campo-hora-minutos");
 const contenedorCategorias = document.getElementById("categorias");
+const contenedorFiltros = document.getElementById("filtros");
 const error = document.getElementById("formulario-error");
 const btnCancelar = document.getElementById("btn-cancelar");
 
@@ -34,6 +36,9 @@ let categoriaElegida = "";
 
 // Qué actividad se está editando.
 let actividadEditando = null;
+
+// Arranca en "todas" para que coincida con la pastilla activa del HTML.
+let filtroActivo = "todas";
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -54,9 +59,11 @@ function marcarPastillaActiva(contenedor, elegida) {
 // ---------- Agenda ----------
 
 function pintarAgenda() {
+  const visibles = listarPor(filtroActivo);
+
   lista.innerHTML = "";
 
-  actividades.forEach((actividad) => {
+  visibles.forEach((actividad) => {
     const categoria = buscarCategoria(actividad.categoriaId);
     const item = document.createElement("li");
 
@@ -94,7 +101,7 @@ function pintarAgenda() {
     lista.appendChild(item);
   });
 
-  mensajeVacio.hidden = actividades.length > 0;
+  mensajeVacio.hidden = visibles.length > 0;
 }
 
 function pintarCategorias() {
@@ -221,6 +228,16 @@ function conectarEventos() {
 
     temporizador.cambiarModo(boton.dataset.modo);
     marcarPastillaActiva(dom.modos, boton);
+  });
+
+  contenedorFiltros.addEventListener("click", (evento) => {
+    const boton = evento.target.closest("[data-filtro]");
+    if (boton === null) return;
+
+    filtroActivo = boton.dataset.filtro;
+
+    marcarPastillaActiva(contenedorFiltros, boton);
+    pintarAgenda();
   });
 
   // Un solo listener para todas las actividades sugeridas.

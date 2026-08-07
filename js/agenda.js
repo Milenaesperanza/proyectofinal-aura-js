@@ -18,6 +18,19 @@ export async function cargarDatos() {
   plantillas = await traerJSON("plantillas");
 }
 
+// Devuelve las actividades que entran en el filtro elegido.
+export function listarPor(filtro) {
+  if (filtro === "pendientes") {
+    return actividades.filter((actividad) => actividad.completada === false);
+  }
+
+  if (filtro === "completadas") {
+    return actividades.filter((actividad) => actividad.completada === true);
+  }
+
+  return actividades;
+}
+
 export function buscarCategoria(id) {
   return categorias.find((categoria) => categoria.id === id);
 }

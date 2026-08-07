@@ -6,6 +6,7 @@
   --tinta: #38323f;
   --tinta-suave: #55505e;
   --naranja: #c05621;
+  --texto-sobre-categoria: #ffffff;
 
   --velo: rgba(56, 50, 63, 0.45);
   --sombra: 0 18px 40px rgba(56, 50, 63, 0.18);
@@ -192,8 +193,8 @@ strong {
 
 .pastilla--activa,
 .pastilla--activa:hover {
-  color: #ffffff;
-  background: var(--color-categoria, var(--lila-profundo));
+  color: var(--texto-sobre-categoria);
+  background: var(--color-categoria, var(--lila-solido));
   border-color: transparent;
   transform: none;
 }

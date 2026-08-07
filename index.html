@@ -30,10 +30,10 @@
         </button>
       </div>
 
-      <div class="grupo grupo--filtros">
-        <button class="pastilla" type="button">Todas</button>
-        <button class="pastilla" type="button">Pendientes</button>
-        <button class="pastilla" type="button">Hechas</button>
+      <div class="grupo grupo--filtros" id="filtros" role="group" aria-label="Filtrar actividades">
+        <button class="pastilla pastilla--activa" type="button" data-filtro="todas">Todas</button>
+        <button class="pastilla" type="button" data-filtro="pendientes">Pendientes</button>
+        <button class="pastilla" type="button" data-filtro="completadas">Hechas</button>
       </div>
 
       <ul class="lista" id="lista-actividades"></ul>
